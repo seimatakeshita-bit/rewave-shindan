@@ -166,51 +166,32 @@ const AXES = [
   { id:"X", label:"安定志向", color:"#8B5CF6", lt:"#F5F3FF", icon:"🛡️" },
 ];
 
+// 5軸 × 4問 = 全20問
 const QS = [
-  // I軸（協調性）8問
+  // I軸（協調性）4問
   {axis:"I",q:"初対面の人と話すとき、あなたは？",opts:[{t:"積極的に話しかけてすぐ仲良くなる",v:4},{t:"様子を見ながら徐々に関わる",v:3},{t:"相手から来るのを待つ",v:2},{t:"必要最低限の会話にとどめる",v:1}]},
-  {axis:"I",q:"チームで作業するとき、一番大切にしていることは？",opts:[{t:"メンバー全員の意見を聞いて進める",v:4},{t:"役割分担を明確にして効率よく進める",v:3},{t:"得意な人が引っ張って進める",v:2},{t:"個人で進めてから合わせる",v:1}]},
   {axis:"I",q:"友達や同僚が悩んでいるとき、あなたは？",opts:[{t:"すぐに話を聞いて一緒に解決策を考える",v:4},{t:"相談されたら全力でサポートする",v:3},{t:"アドバイスはするが深入りはしない",v:2},{t:"本人が解決すべきと思う",v:1}]},
-  {axis:"I",q:"職場の雰囲気づくりについて？",opts:[{t:"自分から積極的に雰囲気をよくしようとする",v:4},{t:"良い雰囲気なら自然と乗っていける",v:3},{t:"仕事さえできれば雰囲気は二の次",v:2},{t:"あまり気にしない",v:1}]},
   {axis:"I",q:"意見が対立したとき、どうする？",opts:[{t:"相手の気持ちを理解して歩み寄る",v:4},{t:"お互いの意見の良い部分を取り入れる",v:3},{t:"論理的に正しい方を選ぶ",v:2},{t:"自分の意見を通す",v:1}]},
-  {axis:"I",q:"新しい環境に入ったとき、どうなる？",opts:[{t:"すぐに周りと仲良くなれる",v:4},{t:"時間はかかるが自然と馴染む",v:3},{t:"仕事を通じて徐々に関係を築く",v:2},{t:"あまり人間関係に積極的でない",v:1}]},
-  {axis:"I",q:"誰かに何かをお願いされたとき？",opts:[{t:"できる限り断らずに手伝う",v:4},{t:"状況を見て判断する",v:3},{t:"自分の仕事に支障がなければ引き受ける",v:2},{t:"自分の仕事を優先する",v:1}]},
   {axis:"I",q:"職場での人間関係について？",opts:[{t:"職場の人たちと仲良くなることが仕事のモチベーション",v:4},{t:"良好な関係は大切だが、仕事あってこそ",v:3},{t:"プロとして関係が保てればよい",v:2},{t:"仕事とプライベートは分けたい",v:1}]},
-  // P軸（バイタリティ）8問
+  // P軸（バイタリティ）4問
   {axis:"P",q:"新しいことに挑戦するとき、あなたは？",opts:[{t:"とにかくやってみる！失敗も経験",v:4},{t:"大まかに計画してから挑戦する",v:3},{t:"十分準備してから慎重に進む",v:2},{t:"リスクが低いことから始める",v:1}]},
-  {axis:"P",q:"エネルギーの源は？",opts:[{t:"人との交流や刺激的な出来事",v:4},{t:"目標を達成したときの達成感",v:3},{t:"自分のペースで積み上げる充実感",v:2},{t:"安定した日常の中の小さな幸せ",v:1}]},
   {axis:"P",q:"プレッシャーがかかったとき？",opts:[{t:"むしろテンションが上がって力が出る",v:4},{t:"適度な緊張感がプラスに働く",v:3},{t:"落ち着いて対処できる",v:2},{t:"消耗しやすいが乗り越えられる",v:1}]},
-  {axis:"P",q:"休日の過ごし方は？",opts:[{t:"友達と出かけたり賑やかに過ごす",v:4},{t:"アクティブに外出したり趣味を楽しむ",v:3},{t:"のんびりと家で好きなことをする",v:2},{t:"しっかり休んでエネルギーを蓄える",v:1}]},
-  {axis:"P",q:"仕事でのモチベーションは？",opts:[{t:"常に高く、困難でも燃える",v:4},{t:"目標があればしっかり維持できる",v:3},{t:"波があるが基本的には安定している",v:2},{t:"コツコツ型で長期的に続けられる",v:1}]},
   {axis:"P",q:"変化に対するあなたの姿勢は？",opts:[{t:"大歓迎！変化こそ成長のチャンス",v:4},{t:"メリットがあれば積極的に対応",v:3},{t:"必要なら対応するが安定も大事",v:2},{t:"できれば変化は少ない方が良い",v:1}]},
-  {axis:"P",q:"目標設定について？",opts:[{t:"高い目標を掲げてチャレンジし続ける",v:4},{t:"達成可能な高めの目標を設定する",v:3},{t:"現実的な目標を着実にクリアする",v:2},{t:"無理のない目標でコツコツ進む",v:1}]},
   {axis:"P",q:"失敗したとき、どうなる？",opts:[{t:"すぐに切り替えて次に活かす",v:4},{t:"原因を分析して前向きに対処",v:3},{t:"落ち込むが時間をかけて立ち直る",v:2},{t:"慎重になるが確実に乗り越える",v:1}]},
-  // A軸（分析力）8問
+  // A軸（分析力）4問
   {axis:"A",q:"情報を整理するとき？",opts:[{t:"論理的な枠組みで体系的に分類する",v:4},{t:"重要度で優先順位をつけて整理する",v:3},{t:"感覚で全体像を掴んでから整理",v:2},{t:"必要なものだけを手元に置く",v:1}]},
   {axis:"A",q:"問題に直面したとき？",opts:[{t:"まず原因を徹底的に分析する",v:4},{t:"データや事実を集めて判断する",v:3},{t:"経験や直感で素早く対処する",v:2},{t:"チームに相談して一緒に解決する",v:1}]},
-  {axis:"A",q:"新しいことを学ぶとき？",opts:[{t:"仕組みや理由まで深く理解したい",v:4},{t:"実用的な知識を効率よく習得したい",v:3},{t:"実践しながら覚えていきたい",v:2},{t:"必要になったら学べばよい",v:1}]},
-  {axis:"A",q:"計画を立てるとき？",opts:[{t:"細部まで詳細に計画を立てる",v:4},{t:"重要なポイントを押さえて計画する",v:3},{t:"大まかな方向性だけ決めて動く",v:2},{t:"その場その場で柔軟に対応する",v:1}]},
-  {axis:"A",q:"データや数字を扱うのは？",opts:[{t:"得意で好き、精度にこだわる",v:4},{t:"必要であれば問題なくできる",v:3},{t:"苦手ではないが得意でもない",v:2},{t:"できれば人に任せたい",v:1}]},
-  {axis:"A",q:"細かいミスへの意識は？",opts:[{t:"細かいミスも見逃せない完璧主義",v:4},{t:"重要な部分は必ずチェックする",v:3},{t:"大きなミスさえなければよい",v:2},{t:"スピード重視でミスは後で直す",v:1}]},
   {axis:"A",q:"仕事の質とスピードどちらを重視？",opts:[{t:"質を最優先、時間をかけても丁寧に",v:4},{t:"質重視だがスピードも意識する",v:3},{t:"バランスよく両方を大切にする",v:2},{t:"スピード重視で素早くこなす",v:1}]},
   {axis:"A",q:"複雑な問題を解くとき？",opts:[{t:"要素を分解して論理的に解決する",v:4},{t:"過去の事例を参考にして解決する",v:3},{t:"複数の視点から考えて解決する",v:2},{t:"直感とスピードで突破する",v:1}]},
-  // D軸（行動力）8問
+  // D軸（行動力）4問
   {axis:"D",q:"大事な決断をするとき？",opts:[{t:"素早く判断してすぐに行動する",v:4},{t:"必要な情報を集めてから決断する",v:3},{t:"周囲の意見も参考にして決める",v:2},{t:"慎重に熟考してから決める",v:1}]},
-  {axis:"D",q:"新しいビジネスチャンスが来たら？",opts:[{t:"可能性を信じてすぐに飛び込む",v:4},{t:"リスクとメリットを考えて判断する",v:3},{t:"専門家の意見を聞いてから決める",v:2},{t:"様子を見てから慎重に動く",v:1}]},
-  {axis:"D",q:"締め切りが迫ったとき？",opts:[{t:"プレッシャーで力が出る、ギリギリ派",v:4},{t:"計画的に進め余裕を持って完成",v:3},{t:"ある程度余裕を持って仕上げる",v:2},{t:"早めに終わらせて安心したい",v:1}]},
   {axis:"D",q:"チームでのあなたの役割は？",opts:[{t:"引っ張るリーダー役が自然",v:4},{t:"状況によってリーダーも担える",v:3},{t:"サポートやフォロー役が得意",v:2},{t:"自分の専門で貢献するのが好き",v:1}]},
-  {axis:"D",q:"目標達成のためなら？",opts:[{t:"多少の無理をしても達成したい",v:4},{t:"努力は惜しまないが限度は守る",v:3},{t:"無理しすぎず継続することを大切に",v:2},{t:"身体や心を最優先にしたい",v:1}]},
   {axis:"D",q:"リスクへの向き合い方は？",opts:[{t:"リスクを取ってでも大きな成果を狙う",v:4},{t:"リスクを管理しながら挑戦する",v:3},{t:"リスクを最小限にして着実に進む",v:2},{t:"安全第一でリスクは避けたい",v:1}]},
-  {axis:"D",q:"仕事での達成感を感じるのは？",opts:[{t:"困難な課題をスピーディーに解決したとき",v:4},{t:"高い目標を達成したとき",v:3},{t:"チームで一緒に目標を達成したとき",v:2},{t:"着実に積み上げてきた成果が出たとき",v:1}]},
   {axis:"D",q:"仕事のペースは？",opts:[{t:"常にフルスロット、ガンガン進む",v:4},{t:"集中して効率よく素早くこなす",v:3},{t:"ペースを保ちながら安定して進む",v:2},{t:"じっくり丁寧に確実に進める",v:1}]},
-  // X軸（安定志向）8問
+  // X軸（安定志向）4問
   {axis:"X",q:"職場に求めることは？",opts:[{t:"安定した収入と長く働ける環境",v:4},{t:"成長できる環境と適切な待遇",v:3},{t:"やりがいと仲間に恵まれた職場",v:2},{t:"自由度が高くチャレンジできる環境",v:1}]},
-  {axis:"X",q:"将来のキャリアについて？",opts:[{t:"安定したキャリアを着実に積みたい",v:4},{t:"専門性を高めてキャリアアップしたい",v:3},{t:"幅広い経験を積んで可能性を広げたい",v:2},{t:"挑戦的なキャリアで大きな成果を出したい",v:1}]},
   {axis:"X",q:"仕事とプライベートのバランスは？",opts:[{t:"プライベートを最優先にしたい",v:4},{t:"両方バランスよく大切にしたい",v:3},{t:"仕事も大事だが余裕は持ちたい",v:2},{t:"仕事に集中して成果を出したい",v:1}]},
-  {axis:"X",q:"ルーティンワークは？",opts:[{t:"安心感があって得意、質を高められる",v:4},{t:"慣れれば効率よくできる",v:3},{t:"ある程度は良いが変化も欲しい",v:2},{t:"単調でやる気が出にくい",v:1}]},
-  {axis:"X",q:"新しい職場環境への適応は？",opts:[{t:"慎重に状況を把握してから動く",v:4},{t:"時間をかけて着実に馴染む",v:3},{t:"柔軟に対応しながら早めに馴染む",v:2},{t:"すぐに適応してガンガン動く",v:1}]},
   {axis:"X",q:"収入と仕事の安定性について？",opts:[{t:"安定した収入と雇用が最優先",v:4},{t:"ある程度の安定があれば挑戦もしたい",v:3},{t:"成果次第で収入が上がる環境が良い",v:2},{t:"リスクを取っても高収入を目指したい",v:1}]},
-  {axis:"X",q:"職場での人間関係のストレスは？",opts:[{t:"かなり気になる、良好な関係は必須",v:4},{t:"多少は気になる、できれば良好に",v:3},{t:"仕事に支障がなければ問題ない",v:2},{t:"あまり気にしない、仕事さえできれば",v:1}]},
   {axis:"X",q:"10年後の自分のイメージは？",opts:[{t:"安定した生活と信頼できる仲間",v:4},{t:"専門性を持った信頼されるプロ",v:3},{t:"多くの経験を積んだ幅広い人材",v:2},{t:"業界で名の知れた存在や起業家",v:1}]},
 ];
 
@@ -229,7 +210,7 @@ function calcScores(answers) {
   const scores = {};
   // 8問×最大4点=32、最小8点 → 0〜100
   Object.keys(raw).forEach(k => {
-    scores[k] = Math.max(0, Math.min(100, Math.round(((raw[k]-8)/24)*100)));
+    scores[k] = Math.max(0, Math.min(100, Math.round(((raw[k]-4)/12)*100)));
   });
   return scores;
 }
@@ -354,9 +335,11 @@ function FInput({ value, onChange, placeholder, type="text" }) {
    MAIN APP
 ════════════════════════════════════════ */
 export default function App() {
+  const resultRef = useRef(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [phase, setPhase]       = useState("intro");
   const [current, setCurrent]   = useState(0);
-  const [answers, setAnswers]   = useState(Array(40).fill(null));
+  const [answers, setAnswers]   = useState(Array(20).fill(null));
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered]   = useState(null);
   const [animIn, setAnimIn]     = useState(true);
@@ -371,7 +354,7 @@ export default function App() {
 
   const q  = QS[current];
   const ax = AXES.find(a=>a.id===q?.axis);
-  const prog = Math.round((current/40)*100);
+  const prog = Math.round((current/20)*100);
 
   function setF(key, val) { setForm(f=>({...f,[key]:val})); }
   function toggleJob(j) { setForm(f=>({ ...f, jobs: f.jobs.includes(j)?f.jobs.filter(x=>x!==j):[...f.jobs,j] })); }
@@ -399,7 +382,7 @@ export default function App() {
     setSelected(idx);
     const na=[...answers]; na[current]=idx; setAnswers(na);
     setTimeout(()=>{
-      if (current<39) {
+      if (current<19) {
         setAnimIn(false);
         setTimeout(()=>{ setCurrent(c=>c+1); setSelected(null); setHovered(null); setAnimIn(true); },240);
       } else finish(na);
@@ -434,8 +417,139 @@ export default function App() {
     setAiLoad(false);
   }
 
+  /* ── PDF生成 ── */
+  async function downloadPDF() {
+    setPdfLoading(true);
+    try {
+      const tp = TYPES[myType] || TYPES["iP"];
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation:"portrait", unit:"mm", format:"a4" });
+
+      // フォント設定（日本語対応のためUnicode使用）
+      const W = 210, margin = 18;
+      let y = 20;
+
+      // ヘッダー背景
+      doc.setFillColor(27, 58, 107);
+      doc.rect(0, 0, W, 50, "F");
+
+      // ReWaveロゴテキスト
+      doc.setTextColor(186, 230, 253);
+      doc.setFontSize(9);
+      doc.text("ReWave Career Compass", margin, 12);
+
+      // タイプ名（英数字のみ）
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.setFont("helvetica", "bold");
+      const typeName = tp.name.replace(/[^ -]/g, "");
+      doc.text(form.name ? `${form.name} san no Shindan Kekka` : "Shindan Kekka", margin, 28);
+      doc.setFontSize(13);
+      doc.setTextColor(186, 230, 253);
+      doc.text(`Type: ${tp.sub} (${tp.system.replace(/[^ -]/g, "")})`, margin, 40);
+
+      y = 62;
+
+      // スコアセクション
+      doc.setTextColor(27, 58, 107);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "bold");
+      doc.text("Personality Score", margin, y);
+      y += 6;
+
+      const axisLabels = [
+        { label:"Kyocho-sei (Cooperation)", key:"I", color:[245,158,11] },
+        { label:"Vitality", key:"P", color:[236,72,153] },
+        { label:"Bunseki-ryoku (Analysis)", key:"A", color:[14,165,233] },
+        { label:"Kodo-ryoku (Action)", key:"D", color:[16,185,129] },
+        { label:"Antei-shiko (Stability)", key:"X", color:[139,92,246] },
+      ];
+
+      axisLabels.forEach(ax => {
+        const score = scores[ax.key] || 0;
+        const barW = (W - margin*2 - 30);
+        // ラベル
+        doc.setFontSize(9); doc.setFont("helvetica","normal");
+        doc.setTextColor(51,65,85);
+        doc.text(ax.label, margin, y+4);
+        // バー背景
+        doc.setFillColor(226,235,246);
+        doc.roundedRect(margin+55, y, barW, 5, 2, 2, "F");
+        // バー
+        doc.setFillColor(...ax.color);
+        doc.roundedRect(margin+55, y, barW*(score/100), 5, 2, 2, "F");
+        // スコア数値
+        doc.setTextColor(...ax.color);
+        doc.setFont("helvetica","bold"); doc.setFontSize(9);
+        doc.text(`${score}%`, W-margin-2, y+4, { align:"right" });
+        y += 12;
+      });
+
+      y += 4;
+      doc.setDrawColor(219,234,254);
+      doc.line(margin, y, W-margin, y);
+      y += 8;
+
+      // 良いところ
+      doc.setTextColor(27,58,107); doc.setFont("helvetica","bold"); doc.setFontSize(10);
+      doc.text("Strong Points", margin, y);
+      y += 6;
+      tp.good.forEach((g, i) => {
+        doc.setFillColor(14,165,233);
+        doc.circle(margin+2, y-1, 1.5, "F");
+        doc.setTextColor(51,65,85); doc.setFont("helvetica","normal"); doc.setFontSize(8.5);
+        const lines = doc.splitTextToSize(g.replace(/[^ -]/g," ") || `Point ${i+1}`, W-margin*2-10);
+        doc.text(lines, margin+7, y);
+        y += lines.length*5 + 2;
+      });
+
+      y += 4;
+
+      // 適職
+      doc.setTextColor(27,58,107); doc.setFont("helvetica","bold"); doc.setFontSize(10);
+      doc.text("Recommended Jobs", margin, y);
+      y += 6;
+      tp.jobs.forEach((job, i) => {
+        doc.setFillColor(i===0?245:16, i===0?158:185, i===0?11:129);
+        doc.roundedRect(margin + i*42, y, 38, 10, 2, 2, "F");
+        doc.setTextColor(255,255,255); doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
+        doc.text(job.replace(/[^ -]/g,"") || `Job${i+1}`, margin+i*42+19, y+6.5, { align:"center" });
+      });
+      y += 18;
+
+      // 転職度
+      doc.setTextColor(27,58,107); doc.setFont("helvetica","bold"); doc.setFontSize(10);
+      doc.text(`Career Change Index: ${tp.change}%`, margin, y);
+      y += 8;
+      doc.setFillColor(226,235,246);
+      doc.roundedRect(margin, y, W-margin*2, 6, 3, 3, "F");
+      const tpColor = tp.color.startsWith("#") ? [
+        parseInt(tp.color.slice(1,3),16),
+        parseInt(tp.color.slice(3,5),16),
+        parseInt(tp.color.slice(5,7),16)
+      ] : [14,165,233];
+      doc.setFillColor(...tpColor);
+      doc.roundedRect(margin, y, (W-margin*2)*(tp.change/100), 6, 3, 3, "F");
+      y += 14;
+
+      // フッター
+      doc.setFillColor(27,58,107);
+      doc.rect(0, 282, W, 15, "F");
+      doc.setTextColor(186,230,253); doc.setFontSize(8); doc.setFont("helvetica","normal");
+      doc.text("ReWave Career Compass | rewave-shindan.vercel.app", W/2, 291, { align:"center" });
+      doc.text(`Generated: ${new Date().toLocaleDateString("ja-JP")}`, W-margin, 291, { align:"right" });
+
+      const fname = form.name ? `${form.name}_shindan.pdf` : "shindan_kekka.pdf";
+      doc.save(fname);
+    } catch(e) {
+      console.error("PDF error:", e);
+      alert("PDFの生成に失敗しました。ブラウザの印刷機能をお使いください。");
+    }
+    setPdfLoading(false);
+  }
+
   function restart() {
-    setPhase("intro"); setCurrent(0); setAnswers(Array(40).fill(null));
+    setPhase("intro"); setCurrent(0); setAnswers(Array(20).fill(null));
     setSelected(null); setHovered(null); setScores(null); setMyType(null);
     setAiText(null); setAiLoad(false); setLoadStep(0); setErrors({}); setSubmitting(false);
     setForm({ name:"", birth:"", phone:"", email:"", location:"", timing:"", jobs:[], memo:"" });
@@ -457,10 +571,10 @@ export default function App() {
             あなたの<span style={{ color:C.foam }}>天職</span>、<br/>もう迷わない。
           </h1>
           <p className="fu2" style={{ color:"rgba(186,230,253,0.75)", fontSize:"clamp(13px,3vw,16px)", lineHeight:1.9, marginBottom:40 }}>
-            5軸×40問の本格診断で<strong style={{color:C.foam}}>あなたのタイプ</strong>が判明🌊
+            5軸×20問の本格診断で<strong style={{color:C.foam}}>あなたのタイプ</strong>が判明🌊
           </p>
           <div className="fu3" style={{ display:"flex", flexWrap:"wrap", gap:10, justifyContent:"center", marginBottom:44 }}>
-            {["⭐ 16タイプ分類","✨ 約8分で完了","🆓 完全無料","📊 5軸本格分析"].map((t,i)=>(
+            {["⭐ 16タイプ分類","✨ 約5分で完了","🆓 完全無料","📊 5軸本格分析"].map((t,i)=>(
               <span key={i} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:99, padding:"7px 16px", fontSize:11, fontWeight:700, color:"rgba(186,230,253,0.85)" }}>{t}</span>
             ))}
           </div>
@@ -472,7 +586,7 @@ export default function App() {
             onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px) scale(1.03)";}}
             onMouseLeave={e=>{e.currentTarget.style.transform="none";}}
           >🚀 今すぐ診断スタート</button>
-          <p style={{ color:"rgba(186,230,253,0.35)", fontSize:11, marginTop:12 }}>登録不要・無料・全40問</p>
+          <p style={{ color:"rgba(186,230,253,0.35)", fontSize:11, marginTop:12 }}>登録不要・無料・全20問</p>
         </div>
       </WaveHeader>
 
@@ -598,7 +712,7 @@ export default function App() {
       <div style={{ textAlign:"center", marginBottom:36 }}>
         <div style={{ fontSize:60, marginBottom:16, animation:"spin 3s linear infinite", display:"inline-block" }}>🌊</div>
         <h2 style={{ color:"#fff", fontSize:22, fontWeight:900, marginBottom:8 }}>あなたのタイプを分析中...</h2>
-        <p style={{ color:"rgba(186,230,253,0.5)", fontSize:13 }}>40問の回答を解析しています</p>
+        <p style={{ color:"rgba(186,230,253,0.5)", fontSize:13 }}>20問の回答を解析しています</p>
       </div>
       <div style={{ background:"rgba(255,255,255,0.06)", backdropFilter:"blur(12px)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:20, padding:28, width:"min(90vw,380px)" }}>
         {AXES.map((a,i)=>(
@@ -650,7 +764,7 @@ export default function App() {
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
               <div style={{ width:30, height:30, borderRadius:8, background:`${ax?.color}22`, border:`1px solid ${ax?.color}44`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14 }}>{ax?.icon}</div>
               <span style={{ fontSize:13, fontWeight:700, color:ax?.color }}>{ax?.label}</span>
-              <span style={{ fontSize:11, color:"rgba(125,211,252,0.45)" }}>Q{(current%8)+1}/8</span>
+              <span style={{ fontSize:11, color:"rgba(125,211,252,0.45)" }}>Q{(current%4)+1}/4</span>
             </div>
             <span style={{ fontSize:13, fontWeight:900, color:"rgba(186,230,253,0.9)" }}>{prog}%</span>
           </div>
@@ -659,7 +773,7 @@ export default function App() {
           </div>
           <div style={{ display:"flex", gap:3, marginTop:5 }}>
             {AXES.map((a,i)=>(
-              <div key={a.id} style={{ flex:1, height:3, borderRadius:99, background:Math.floor(current/8)>=i?a.color:"rgba(255,255,255,0.1)", transition:"background 0.3s" }}/>
+              <div key={a.id} style={{ flex:1, height:3, borderRadius:99, background:Math.floor(current/4)>=i?a.color:"rgba(255,255,255,0.1)", transition:"background 0.3s" }}/>
             ))}
           </div>
         </div>
@@ -913,71 +1027,78 @@ export default function App() {
 
         {/* 16タイプ一覧 */}
         <div style={{ background:C.bgCard, borderRadius:20, boxShadow:"0 3px 20px rgba(27,43,94,0.09)", padding:"24px", marginBottom:14 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:20 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
             <div style={{ width:4, height:20, borderRadius:2, background:C.navy }}/>
             <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.1em", color:C.txt3 }}>🧬 16タイプ分類一覧</span>
           </div>
+          <p style={{ fontSize:11, color:C.txt4, marginBottom:20, paddingLeft:12 }}>あなたのタイプは<strong style={{color:C.navy}}>{TYPES[myType]?.name}</strong>です</p>
 
           {[
             { system:"🤝 協調タイプ", color:"#F59E0B", bg:"#FEF3C7",
               types:[
-                { key:"iI", name:"心の橋渡し役", sub:"共感者", catch:"周りの気持ちを誰より理解できるタイプ" },
-                { key:"iP", name:"縁の下の太陽", sub:"貢献者", catch:"一緒にいて絶妙な安心感を与えるタイプ" },
-                { key:"iA", name:"頼れる守護者", sub:"支援者", catch:"縁の下の力持ちとして組織を支えるタイプ" },
-                { key:"iD", name:"深海の哲人",   sub:"思索者", catch:"じっくり深く考えて最善を導き出すタイプ" },
+                { key:"iI", name:"心の橋渡し役", sub:"共感者",  catch:"周りの気持ちを誰より理解できる" },
+                { key:"iP", name:"縁の下の太陽", sub:"貢献者",  catch:"一緒にいて絶妙な安心感を与える" },
+                { key:"iA", name:"頼れる守護者", sub:"支援者",  catch:"縁の下の力持ちとして組織を支える" },
+                { key:"iD", name:"深海の哲人",   sub:"思索者",  catch:"じっくり深く考えて最善を導き出す" },
               ]},
             { system:"⚡ 行動タイプ", color:"#EC4899", bg:"#FDF2F8",
               types:[
-                { key:"pI", name:"チームの火種",   sub:"協創者", catch:"チームをまとめてみんなで前進するタイプ" },
-                { key:"pP", name:"場を彩る太陽",   sub:"活力者", catch:"いるだけで場を明るくする天性のムードメーカー" },
-                { key:"pA", name:"こだわりの芸人", sub:"職人気質", catch:"明るく大胆な性格と精密さを兼ね備えた職人気質" },
-                { key:"pD", name:"道なき道を行く人", sub:"開拓者", catch:"思いついたことをすぐに行動に移せる行動派" },
+                { key:"pI", name:"チームの火種",     sub:"協創者",  catch:"チームをまとめてみんなで前進する" },
+                { key:"pP", name:"場を彩る太陽",     sub:"活力者",  catch:"いるだけで場を明るくするムードメーカー" },
+                { key:"pA", name:"こだわりの芸人",   sub:"職人気質",catch:"大胆な性格と精密さを兼ね備えた職人" },
+                { key:"pD", name:"道なき道を行く人", sub:"開拓者",  catch:"思いついたことをすぐ行動に移す" },
               ]},
             { system:"🧠 思考タイプ", color:"#0EA5E9", bg:"#EFF9FF",
               types:[
-                { key:"aI", name:"積み上げの達人", sub:"勤勉者", catch:"コツコツと正確に積み上げることが誰より得意" },
-                { key:"aP", name:"頼れる仕事人",   sub:"実務者", catch:"正確でスピーディーな仕事で周りの頼れる存在" },
-                { key:"aA", name:"知の航海士",     sub:"探求者", catch:"高い調査能力で深い専門知識を持つ情報のプロ" },
-                { key:"aD", name:"データの魔術師", sub:"分析者", catch:"高い分析力と合理性でデータから答えを出すタイプ" },
+                { key:"aI", name:"積み上げの達人", sub:"勤勉者", catch:"コツコツと正確に積み上げることが得意" },
+                { key:"aP", name:"頼れる仕事人",   sub:"実務者", catch:"正確でスピーディーな頼れる存在" },
+                { key:"aA", name:"知の航海士",     sub:"探求者", catch:"高い調査能力で深い専門知識を持つ" },
+                { key:"aD", name:"データの魔術師", sub:"分析者", catch:"高い分析力でデータから答えを出す" },
               ]},
             { system:"🚀 挑戦タイプ", color:"#10B981", bg:"#ECFDF5",
               types:[
-                { key:"dI", name:"波を起こす人",   sub:"推進者", catch:"人を引きつけてプロジェクトを前に進めるタイプ" },
-                { key:"dP", name:"旗手",           sub:"指揮者", catch:"強いリーダーシップと高い行動力で組織を牽引" },
-                { key:"dA", name:"広角の先導者",   sub:"調和者", catch:"広い視野と高い分析力で物事の仕組みを解明する" },
-                { key:"dD", name:"常識を壊す人",   sub:"革新者", catch:"他人の意見に左右されず自分の道を突き進むタイプ" },
+                { key:"dI", name:"波を起こす人",   sub:"推進者", catch:"人を引きつけてプロジェクトを推進する" },
+                { key:"dP", name:"旗手",           sub:"指揮者", catch:"強いリーダーシップで組織を牽引する" },
+                { key:"dA", name:"広角の先導者",   sub:"調和者", catch:"広い視野と高い分析力で物事を解明する" },
+                { key:"dD", name:"常識を壊す人",   sub:"革新者", catch:"自分の道を突き進む革新者" },
               ]},
           ].map((group, gi) => (
-            <div key={gi} style={{ marginBottom: gi<3 ? 20 : 0 }}>
+            <div key={gi} style={{ marginBottom: gi<3 ? 24 : 0 }}>
               {/* 系統ヘッダー */}
-              <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:group.bg, border:`1.5px solid ${group.color}44`, borderRadius:99, padding:"5px 16px", marginBottom:12 }}>
-                <span style={{ fontSize:12, fontWeight:700, color:group.color }}>{group.system}</span>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12, paddingBottom:10, borderBottom:`2px solid ${group.color}33` }}>
+                <div style={{ width:5, height:22, borderRadius:3, background:group.color }}/>
+                <span style={{ fontSize:14, fontWeight:900, color:group.color }}>{group.system}</span>
               </div>
-              {/* タイプリスト */}
-              <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+              {/* タイプカードグリッド */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
                 {group.types.map((t) => {
                   const isMe = myType === t.key;
                   return (
                     <div key={t.key} style={{
-                      display:"flex", alignItems:"center", gap:12,
-                      padding:"12px 14px",
+                      padding:"14px 12px",
                       background: isMe ? group.bg : C.bgMist,
-                      border: `1.5px solid ${isMe ? group.color : C.border}`,
-                      borderRadius:12,
+                      border: `2px solid ${isMe ? group.color : C.border}`,
+                      borderRadius:14,
                       position:"relative",
+                      boxShadow: isMe ? `0 4px 16px ${group.color}22` : "none",
+                      transition:"all 0.2s",
                     }}>
+                      {/* あなたバッジ */}
                       {isMe && (
-                        <div style={{ position:"absolute", top:-1, right:10, background:group.color, color:"#fff", fontSize:9, fontWeight:700, padding:"2px 8px", borderRadius:"0 0 6px 6px" }}>
-                          ✓ あなた
+                        <div style={{ position:"absolute", top:-10, left:"50%", transform:"translateX(-50%)", background:group.color, color:"#fff", fontSize:9, fontWeight:900, padding:"3px 12px", borderRadius:99, whiteSpace:"nowrap", boxShadow:`0 2px 8px ${group.color}44` }}>
+                          ✓ あなたのタイプ
                         </div>
                       )}
-                      <div style={{ flex:1, minWidth:0 }}>
-                        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:3 }}>
-                          <span style={{ fontSize:14, fontWeight:900, color: isMe ? group.color : C.navy }}>{t.name}</span>
-                          <span style={{ fontSize:11, color:C.txt4 }}>（{t.sub}）</span>
-                        </div>
-                        <p style={{ fontSize:12, color:C.txt3, lineHeight:1.6 }}>{t.catch}</p>
+                      {/* タイプ名 */}
+                      <div style={{ fontSize:13, fontWeight:900, color: isMe ? group.color : C.navy, marginBottom:3, lineHeight:1.4 }}>
+                        {t.name}
                       </div>
+                      {/* サブ名 */}
+                      <div style={{ fontSize:10, fontWeight:700, color: isMe ? group.color : C.txt4, marginBottom:6, background: isMe ? `${group.color}15` : C.border+"44", display:"inline-block", padding:"1px 8px", borderRadius:99 }}>
+                        {t.sub}
+                      </div>
+                      {/* キャッチ */}
+                      <p style={{ fontSize:11, color: isMe ? C.txt2 : C.txt3, lineHeight:1.6 }}>{t.catch}</p>
                     </div>
                   );
                 })}
@@ -986,13 +1107,29 @@ export default function App() {
           ))}
         </div>
 
-        <div style={{ textAlign:"center", marginTop:24 }}>
+        {/* PDFダウンロード＋もう一度ボタン */}
+        <div style={{ textAlign:"center", marginTop:24, display:"flex", flexDirection:"column", alignItems:"center", gap:12 }}>
+          <button onClick={downloadPDF} disabled={pdfLoading} style={{
+            background:`linear-gradient(135deg,${C.coral},#EF4444)`,
+            color:"#fff", border:"none", borderRadius:99,
+            padding:"14px 36px", fontSize:14, fontWeight:900,
+            cursor:pdfLoading?"not-allowed":"pointer",
+            boxShadow:"0 6px 20px rgba(249,115,22,0.35)",
+            transition:"all 0.18s", opacity:pdfLoading?0.7:1,
+            display:"flex", alignItems:"center", gap:8,
+          }}
+            onMouseEnter={e=>{if(!pdfLoading){e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 28px rgba(249,115,22,0.45)";}}}
+            onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="0 6px 20px rgba(249,115,22,0.35)";}}
+          >
+            {pdfLoading ? "⏳ 生成中..." : "📄 結果をPDFで保存する"}
+          </button>
           <button onClick={restart} style={{ background:"transparent", border:`1px solid ${C.borderMd}`, color:C.txt3, borderRadius:99, padding:"10px 26px", fontSize:12, fontWeight:700, cursor:"pointer", transition:"all 0.15s" }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=C.navyMid;e.currentTarget.style.color=C.navy;}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor=C.borderMd;e.currentTarget.style.color=C.txt3;}}
           >← もう一度診断する</button>
         </div>
       </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
       <style>{CSS}</style>
     </div>
   );
