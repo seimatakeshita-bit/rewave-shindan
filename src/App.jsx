@@ -437,6 +437,15 @@ export default function App() {
     },480);
   }
 
+  function goBack() {
+    if (current===0) { setPhase("form"); return; }
+    setAnimIn(false);
+    setTimeout(()=>{
+      const na=[...answers]; na[current]=null; setAnswers(na);
+      setCurrent(c=>c-1); setSelected(answers[current-1]); setHovered(null); setAnimIn(true);
+    },240);
+  }
+
   function finish(ans) {
     setPhase("loading");
     const s = calcScores(ans);
@@ -820,6 +829,14 @@ export default function App() {
         <div style={{ maxWidth:560, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+              {/* 戻るボタン（最後の質問以外） */}
+              {current < 19 && (
+                <button onClick={goBack} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(56,189,248,0.25)", borderRadius:8, width:30, height:30, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", color:"rgba(186,230,253,0.7)", fontSize:16, transition:"all 0.15s", fontFamily:"inherit" }}
+                  onMouseEnter={e=>{e.currentTarget.style.background="rgba(255,255,255,0.15)";e.currentTarget.style.color="#fff";}}
+                  onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.08)";e.currentTarget.style.color="rgba(186,230,253,0.7)";}}
+                  title="前の質問に戻る"
+                >←</button>
+              )}
               <div style={{ width:30, height:30, borderRadius:8, background:`${ax?.color}22`, border:`1px solid ${ax?.color}44`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14 }}>{ax?.icon}</div>
               <span style={{ fontSize:13, fontWeight:700, color:ax?.color }}>{ax?.label}</span>
               <span style={{ fontSize:11, color:"rgba(125,211,252,0.45)" }}>Q{(current%4)+1}/4</span>
