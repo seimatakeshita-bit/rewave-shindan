@@ -398,11 +398,18 @@ export default function App() {
             {icon:"🧠", t:"5軸パーソナリティ分析", d:"心理学ベースの多次元診断", c:C.ocean},
             {icon:"🤖", t:"AIキャリアアドバイス",  d:"あなただけの提言を生成",   c:C.violet},
             {icon:"💼", t:"適職ランキングTOP5",    d:"10職種から最適を算出",     c:C.mint},
+            {icon:"📅", t:"無料キャリア相談",      d:"プロに今すぐ相談できる",    c:C.coral},
           ].map((f,i)=>(
-            <div key={i} style={{ background:C.bgCard, borderRadius:16, boxShadow:"0 2px 16px rgba(27,43,94,0.07)", padding:"22px 18px", textAlign:"center" }}>
+            <div key={i}
+              onClick={i===3 ? ()=>window.open(TIMEREX_URL,"_blank") : undefined}
+              style={{ background:C.bgCard, borderRadius:16, boxShadow:"0 2px 16px rgba(27,43,94,0.07)", padding:"22px 18px", textAlign:"center", cursor:i===3?"pointer":"default", transition:"transform 0.15s, box-shadow 0.15s" }}
+              onMouseEnter={i===3 ? e=>{e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow="0 8px 24px rgba(249,115,22,0.2)";} : undefined}
+              onMouseLeave={i===3 ? e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="0 2px 16px rgba(27,43,94,0.07)";} : undefined}
+            >
               <div style={{ width:52, height:52, borderRadius:14, background:`${f.c}15`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, margin:"0 auto 12px" }}>{f.icon}</div>
-              <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:6 }}>{f.t}</div>
+              <div style={{ fontSize:13, fontWeight:800, color:i===3?C.coral:C.navy, marginBottom:6 }}>{f.t}</div>
               <div style={{ fontSize:12, color:C.txt3, lineHeight:1.6 }}>{f.d}</div>
+              {i===3 && <div style={{ marginTop:8, fontSize:11, fontWeight:700, color:C.coral }}>タップして予約 →</div>}
             </div>
           ))}
         </div>
