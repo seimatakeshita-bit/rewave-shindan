@@ -282,6 +282,22 @@ export default function App() {
     return Object.keys(e).length === 0;
   }
 
+  /* ── Google スプレッドシートに送信 ── */
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyuWyb2LtCDP9dMRUS1i_S6VxZEyCpHGz8xcbxuLvztehM3cpOK_Id5IG8sTLAHXUer/exec";
+
+  async function sendToSheet(formData) {
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch (e) {
+      console.error("スプレッドシート送信エラー:", e);
+    }
+  }
+
   /* ── Quiz ── */
   function choose(idx) {
     if (selected !== null) return;
@@ -501,7 +517,7 @@ export default function App() {
           </Field>
 
           {/* Submit */}
-          <button onClick={()=>{ if(validateForm()) setPhase("quiz"); }} style={{
+          <button onClick={async ()=>{ if(validateForm()){ await sendToSheet(form); setPhase("quiz"); } }} style={{
             width:"100%", background:`linear-gradient(135deg,${C.navy},${C.navyLt})`,
             color:"#fff", border:"none", borderRadius:12, padding:"16px",
             fontSize:15, fontWeight:900, cursor:"pointer",
