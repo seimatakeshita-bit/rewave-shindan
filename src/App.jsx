@@ -516,7 +516,24 @@ export default function App() {
 
           {/* 生年月日 */}
           <Field label="生年月日" required>
-            <Input type="date" value={form.birth} onChange={e=>setF("birth",e.target.value)} />
+            <input
+              type="date"
+              value={form.birth}
+              onChange={e=>setF("birth",e.target.value)}
+              style={{
+                width:"100%", padding:"12px 14px", fontSize:16,
+                color:C.txt1, background:C.bgCard,
+                border:`1.5px solid ${C.border}`,
+                borderRadius:10, outline:"none",
+                fontFamily:"'Noto Sans JP','Hiragino Sans',sans-serif",
+                WebkitAppearance:"none",
+                appearance:"none",
+                boxSizing:"border-box",
+                maxWidth:"100%",
+              }}
+              onFocus={e=>{e.target.style.borderColor=C.ocean;}}
+              onBlur={e=>{e.target.style.borderColor=C.border;}}
+            />
             {errors.birth && <p style={{ color:C.rose, fontSize:11, marginTop:5 }}>⚠ {errors.birth}</p>}
           </Field>
 
