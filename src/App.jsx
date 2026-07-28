@@ -87,7 +87,7 @@ const QS = [
   {axis:"mental",q:"自分のメンタルの強みは？",opts:[{t:"逆境でも折れない強靭さ",v:5},{t:"感情に共感する豊かな感受性",v:4},{t:"慎重で安定した判断力",v:2},{t:"まだよくわからない",v:1}]},
 ];
 
-const JOB_OPTIONS = ["事務職","施工管理職","エンジニア職","営業職","販売職","マーケティング","Webデザイン","コンサルタント","クリエイター","まだわからない"];
+const JOB_OPTIONS = ["事務職","受付・事務","施工管理職","エンジニア職","営業職","販売職","WEBデザイナー","飲食・調理職","医療・介護職","マーケティング","コンサルタント","クリエイター","まだわからない"];
 const TIMING_OPTIONS = ["今すぐ","1ヶ月〜3ヶ月以内","3ヶ月以上先","考えていない"];
 const PREF_OPTIONS = ["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡","その他（全国）","リモート希望"];
 
@@ -219,6 +219,9 @@ const CSS = `
 button,a,input,select,textarea{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;}
 body{background:${C.bg};}
 @keyframes waveSweep1{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes slideInLeft{0%{opacity:0;transform:translateX(-60px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{0%{opacity:0;transform:translateX(60px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 rgba(56,189,248,0)}50%{box-shadow:0 0 20px rgba(56,189,248,0.3)}}
 @keyframes waveSweep2{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
 @keyframes waveSweep3{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes quizFloat{0%{transform:translateY(0) scale(1);opacity:.5}100%{transform:translateY(-12px) scale(1.1);opacity:1}}
@@ -414,22 +417,74 @@ export default function App() {
           ))}
         </div>
 
-        {/* Job preview */}
-        <div style={{ background:C.bgCard, borderRadius:18, boxShadow:"0 2px 16px rgba(27,43,94,0.07)", padding:"24px" }}>
-          <div style={{ fontSize:12, fontWeight:700, color:C.txt3, letterSpacing:"0.1em", marginBottom:16, textAlign:"center" }}>あなたの適職がわかる！</div>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:10, justifyContent:"center" }}>
-            {top5.length ? top5.map((j,i)=>(
-              <div key={i} style={{ display:"flex", alignItems:"center", gap:6, background:`${j.color}10`, border:`1.5px solid ${j.color}33`, borderRadius:10, padding:"8px 14px" }}>
-                <span>{j.icon}</span><span style={{ fontSize:12, fontWeight:700, color:j.color }}>{j.name}</span>
+        {/* Job preview — SNSバズり仕様 */}
+        <div style={{ background:`linear-gradient(135deg,${C.navy},${C.navyMid})`, borderRadius:20, padding:"28px 20px", position:"relative", overflow:"hidden" }}>
+          {/* 背景装飾 */}
+          <div style={{ position:"absolute", top:-40, right:-40, width:160, height:160, borderRadius:"50%", background:"rgba(56,189,248,0.08)", pointerEvents:"none" }}/>
+          <div style={{ position:"absolute", bottom:-30, left:-20, width:120, height:120, borderRadius:"50%", background:"rgba(59,111,212,0.08)", pointerEvents:"none" }}/>
+
+          <div style={{ position:"relative", zIndex:1 }}>
+            <div style={{ textAlign:"center", marginBottom:20 }}>
+              <span style={{ display:"inline-block", background:"rgba(251,191,36,0.15)", border:"1px solid rgba(251,191,36,0.35)", color:"#FCD34D", borderRadius:99, padding:"4px 16px", fontSize:11, fontWeight:700, letterSpacing:"0.08em", marginBottom:10 }}>
+                🔥 あなたの適職がわかる！
+              </span>
+              <div style={{ fontSize:18, fontWeight:900, color:"#fff", letterSpacing:"-0.01em" }}>
+                診断で<span style={{ color:"#38BDF8" }}>天職</span>を見つけよう
               </div>
-            )) : [
-              {icon:"📋",name:"事務職",color:C.aqua},{icon:"🏗️",name:"施工管理",color:C.coral},
-              {icon:"💻",name:"エンジニア",color:C.ocean},{icon:"🤝",name:"営業職",color:C.mint},{icon:"🛍️",name:"販売職",color:C.violet}
-            ].map((j,i)=>(
-              <div key={i} style={{ display:"flex", alignItems:"center", gap:6, background:`${j.color}10`, border:`1.5px solid ${j.color}33`, borderRadius:10, padding:"8px 14px" }}>
-                <span>{j.icon}</span><span style={{ fontSize:12, fontWeight:700, color:j.color }}>{j.name}</span>
+            </div>
+
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))", gap:10 }}>
+              {[
+                {icon:"📋", name:"事務職",     color:"#22D3EE", grad:"linear-gradient(135deg,#06B6D4,#0EA5E9)", tag:"安定"},
+                {icon:"🏗️", name:"施工管理職",  color:"#FB923C", grad:"linear-gradient(135deg,#F97316,#EF4444)", tag:"高収入"},
+                {icon:"💻", name:"エンジニア職", color:"#60A5FA", grad:"linear-gradient(135deg,#3B82F6,#6366F1)", tag:"成長"},
+                {icon:"🤝", name:"営業職",     color:"#34D399", grad:"linear-gradient(135deg,#10B981,#059669)", tag:"稼げる"},
+                {icon:"🛍️", name:"販売職",     color:"#A78BFA", grad:"linear-gradient(135deg,#8B5CF6,#7C3AED)", tag:"接客"},
+                {icon:"🌸", name:"受付・事務",   color:"#F472B6", grad:"linear-gradient(135deg,#EC4899,#DB2777)", tag:"丁寧"},
+                {icon:"🎨", name:"WEBデザイナー", color:"#FBBF24", grad:"linear-gradient(135deg,#F59E0B,#D97706)", tag:"クリエイティブ"},
+                {icon:"🍳", name:"飲食・調理職",  color:"#FB7185", grad:"linear-gradient(135deg,#F43F5E,#E11D48)", tag:"未経験OK"},
+                {icon:"🏥", name:"医療・介護職",  color:"#4ADE80", grad:"linear-gradient(135deg,#22C55E,#16A34A)", tag:"需要高い"},
+              ].map((j,i)=>(
+                <div key={i} style={{
+                  background:"rgba(255,255,255,0.06)",
+                  backdropFilter:"blur(8px)",
+                  border:"1px solid rgba(255,255,255,0.12)",
+                  borderRadius:14,
+                  padding:"14px 10px",
+                  textAlign:"center",
+                  cursor:"default",
+                  animation:`${i%2===0?"slideInLeft":"slideInRight"} 0.6s cubic-bezier(0.16,1,0.3,1) ${i*0.12}s both`,
+                  transition:"transform 0.2s, box-shadow 0.2s",
+                }}
+                  onMouseEnter={e=>{
+                    e.currentTarget.style.transform="translateY(-6px) scale(1.04)";
+                    e.currentTarget.style.boxShadow=`0 12px 32px ${j.color}44`;
+                    e.currentTarget.style.border=`1px solid ${j.color}66`;
+                  }}
+                  onMouseLeave={e=>{
+                    e.currentTarget.style.transform="none";
+                    e.currentTarget.style.boxShadow="none";
+                    e.currentTarget.style.border="1px solid rgba(255,255,255,0.12)";
+                  }}
+                >
+                  <div style={{
+                    fontSize:32, marginBottom:8,
+                    animation:`glowPulse ${2+i*0.3}s ease-in-out ${i*0.2}s infinite`,
+                    display:"inline-block",
+                  }}>{j.icon}</div>
+                  <div style={{ fontSize:12, fontWeight:800, color:"#fff", marginBottom:6 }}>{j.name}</div>
+                  <div style={{ display:"inline-block", background:j.grad, borderRadius:99, padding:"3px 10px", fontSize:10, fontWeight:700, color:"#fff", boxShadow:`0 2px 8px ${j.color}44` }}>
+                    #{j.tag}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ textAlign:"center", marginTop:18 }}>
+              <div style={{ fontSize:12, color:"rgba(186,230,253,0.5)", letterSpacing:"0.05em" }}>
+                ✨ 5軸診断で<strong style={{color:"rgba(186,230,253,0.8)"}}>あなただけ</strong>の結果が出ます
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
