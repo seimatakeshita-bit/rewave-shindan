@@ -438,6 +438,16 @@ export default function App() {
     setPdfLoading(true);
     try {
       const tp = TYPES[myType] || TYPES["iP"];
+      // jsPDFを動的ロード
+      if (!window.jspdf) {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      }
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ orientation:"portrait", unit:"mm", format:"a4" });
 
@@ -1152,7 +1162,6 @@ export default function App() {
           >← もう一度診断する</button>
         </div>
       </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
       <style>{CSS}</style>
     </div>
   );
