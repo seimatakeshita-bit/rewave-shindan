@@ -553,11 +553,16 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
 </div>
 <div class="ft">ReWave Career Compass | rewave-shindan.vercel.app | 無料キャリア相談：timerex.net/s/jobagency_4d9c/0fb7dbf2</div>
 </body></html>`;
-    const win = window.open("","_blank");
-    if (!win) { alert("ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。"); return; }
-    win.document.write(html);
-    win.document.close();
-    win.onload = () => { win.focus(); win.print(); };
+    // Blobを使ってダウンロード（ポップアップ不要）
+    const blob = new Blob([html], {type: "text/html;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fname + ".html";
+    a.click();
+    URL.revokeObjectURL(url);
+    alert("HTMLファイルをダウンロードしました！
+ファイルを開いてCtrl+P（印刷）→PDFとして保存してください。");
   }
   function restart() {
     setPhase("intro"); setCurrent(0); setAnswers(Array(20).fill(null));
