@@ -384,7 +384,6 @@ function FInput({ value, onChange, placeholder, type="text" }) {
 ════════════════════════════════════════ */
 export default function App() {
   const resultRef = useRef(null);
-  const [pdfLoading, setPdfLoading] = useState(false);
   const [phase, setPhase]       = useState("intro");
   const [current, setCurrent]   = useState(0);
   const [answers, setAnswers]   = useState(Array(20).fill(null));
@@ -475,146 +474,91 @@ export default function App() {
   }
 
   /* ── PDF生成 ── */
-  async function downloadPDF() {
-    setPdfLoading(true);
-    try {
-      const tp = TYPES[myType] || TYPES["iP"];
-      // jsPDFを動的ロード
-      if (!window.jspdf) {
-        await new Promise((resolve, reject) => {
-          const s = document.createElement("script");
-          s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-          s.onload = resolve;
-          s.onerror = reject;
-          document.head.appendChild(s);
-        });
-      }
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ orientation:"portrait", unit:"mm", format:"a4" });
-
-      // フォント設定（日本語対応のためUnicode使用）
-      const W = 210, margin = 18;
-      let y = 20;
-
-      // ヘッダー背景
-      doc.setFillColor(27, 58, 107);
-      doc.rect(0, 0, W, 50, "F");
-
-      // ReWaveロゴテキスト
-      doc.setTextColor(186, 230, 253);
-      doc.setFontSize(9);
-      doc.text("ReWave Career Compass", margin, 12);
-
-      // タイプ名（英数字のみ）
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(22);
-      doc.setFont("helvetica", "bold");
-      const typeName = tp.name.replace(/[^ -]/g, "");
-      doc.text(form.name ? `${form.name} san no Shindan Kekka` : "Shindan Kekka", margin, 28);
-      doc.setFontSize(13);
-      doc.setTextColor(186, 230, 253);
-      doc.text(`Type: ${tp.sub} (${tp.system.replace(/[^ -]/g, "")})`, margin, 40);
-
-      y = 62;
-
-      // スコアセクション
-      doc.setTextColor(27, 58, 107);
-      doc.setFontSize(11);
-      doc.setFont("helvetica", "bold");
-      doc.text("Personality Score", margin, y);
-      y += 6;
-
-      const axisLabels = [
-        { label:"Kyocho-sei (Cooperation)", key:"I", color:[245,158,11] },
-        { label:"Vitality", key:"P", color:[236,72,153] },
-        { label:"Bunseki-ryoku (Analysis)", key:"A", color:[14,165,233] },
-        { label:"Kodo-ryoku (Action)", key:"D", color:[16,185,129] },
-        { label:"Antei-shiko (Stability)", key:"X", color:[139,92,246] },
-      ];
-
-      axisLabels.forEach(ax => {
-        const score = scores[ax.key] || 0;
-        const barW = (W - margin*2 - 30);
-        // ラベル
-        doc.setFontSize(9); doc.setFont("helvetica","normal");
-        doc.setTextColor(51,65,85);
-        doc.text(ax.label, margin, y+4);
-        // バー背景
-        doc.setFillColor(226,235,246);
-        doc.roundedRect(margin+55, y, barW, 5, 2, 2, "F");
-        // バー
-        doc.setFillColor(...ax.color);
-        doc.roundedRect(margin+55, y, barW*(score/100), 5, 2, 2, "F");
-        // スコア数値
-        doc.setTextColor(...ax.color);
-        doc.setFont("helvetica","bold"); doc.setFontSize(9);
-        doc.text(`${score}%`, W-margin-2, y+4, { align:"right" });
-        y += 12;
-      });
-
-      y += 4;
-      doc.setDrawColor(219,234,254);
-      doc.line(margin, y, W-margin, y);
-      y += 8;
-
-      // 良いところ
-      doc.setTextColor(27,58,107); doc.setFont("helvetica","bold"); doc.setFontSize(10);
-      doc.text("Strong Points", margin, y);
-      y += 6;
-      tp.good.forEach((g, i) => {
-        doc.setFillColor(14,165,233);
-        doc.circle(margin+2, y-1, 1.5, "F");
-        doc.setTextColor(51,65,85); doc.setFont("helvetica","normal"); doc.setFontSize(8.5);
-        const lines = doc.splitTextToSize(g.replace(/[^ -]/g," ") || `Point ${i+1}`, W-margin*2-10);
-        doc.text(lines, margin+7, y);
-        y += lines.length*5 + 2;
-      });
-
-      y += 4;
-
-      // 適職
-      doc.setTextColor(27,58,107); doc.setFont("helvetica","bold"); doc.setFontSize(10);
-      doc.text("Recommended Jobs", margin, y);
-      y += 6;
-      tp.jobs.forEach((job, i) => {
-        doc.setFillColor(i===0?245:16, i===0?158:185, i===0?11:129);
-        doc.roundedRect(margin + i*42, y, 38, 10, 2, 2, "F");
-        doc.setTextColor(255,255,255); doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
-        doc.text(job.replace(/[^ -]/g,"") || `Job${i+1}`, margin+i*42+19, y+6.5, { align:"center" });
-      });
-      y += 18;
-
-      // 転職度
-      doc.setTextColor(27,58,107); doc.setFont("helvetica","bold"); doc.setFontSize(10);
-      doc.text(`Career Change Index: ${tp.change}%`, margin, y);
-      y += 8;
-      doc.setFillColor(226,235,246);
-      doc.roundedRect(margin, y, W-margin*2, 6, 3, 3, "F");
-      const tpColor = tp.color.startsWith("#") ? [
-        parseInt(tp.color.slice(1,3),16),
-        parseInt(tp.color.slice(3,5),16),
-        parseInt(tp.color.slice(5,7),16)
-      ] : [14,165,233];
-      doc.setFillColor(...tpColor);
-      doc.roundedRect(margin, y, (W-margin*2)*(tp.change/100), 6, 3, 3, "F");
-      y += 14;
-
-      // フッター
-      doc.setFillColor(27,58,107);
-      doc.rect(0, 282, W, 15, "F");
-      doc.setTextColor(186,230,253); doc.setFontSize(8); doc.setFont("helvetica","normal");
-      doc.text("ReWave Career Compass | rewave-shindan.vercel.app", W/2, 291, { align:"center" });
-      doc.text(`Generated: ${new Date().toLocaleDateString("ja-JP")}`, W-margin, 291, { align:"right" });
-
-      const fname = form.name ? `${form.name}_shindan.pdf` : "shindan_kekka.pdf";
-      doc.save(fname);
-    } catch(e) {
-      console.error("PDF error:", e);
-      alert("PDFの生成に失敗しました。ブラウザの印刷機能をお使いください。");
-    }
-    setPdfLoading(false);
+  function downloadPDF() {
+    const tp = TYPES[myType] || TYPES["iP"];
+    const fname = form.name ? `${form.name}さん_適職診断結果` : "適職診断結果";
+    const axisData = [
+      {label:"協調性",key:"I",color:"#F59E0B"},
+      {label:"バイタリティ",key:"P",color:"#EC4899"},
+      {label:"分析力",key:"A",color:"#0EA5E9"},
+      {label:"行動力",key:"D",color:"#10B981"},
+      {label:"安定志向",key:"X",color:"#8B5CF6"},
+    ];
+    const html = `<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>${fname}</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans JP',sans-serif;background:#fff;color:#0F172A;font-size:13px;}
+.hd{background:linear-gradient(135deg,#1B3A6B,#2952A3);color:#fff;padding:22px 28px 18px;}
+.hd .br{font-size:10px;color:rgba(186,230,253,0.6);letter-spacing:0.15em;margin-bottom:6px;}
+.hd h1{font-size:24px;font-weight:900;margin-bottom:3px;}
+.hd .su{font-size:12px;color:rgba(186,230,253,0.7);}
+.bd{padding:18px 28px;}
+.sec{margin-bottom:16px;border:1px solid #DBEAFE;border-radius:10px;padding:14px;}
+.st{font-size:10px;font-weight:700;color:#64748B;letter-spacing:0.1em;margin-bottom:10px;}
+.badge{display:inline-block;background:${tp.bg};border:1.5px solid ${tp.color}44;border-radius:99px;padding:3px 12px;font-size:10px;font-weight:700;color:${tp.color};margin-bottom:6px;}
+.tn{font-size:24px;font-weight:900;color:#1B3A6B;margin-bottom:3px;}
+.tc{font-size:12px;font-weight:700;color:${tp.color};margin-bottom:8px;}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.tag{background:${tp.bg};border:1px solid ${tp.color}44;border-radius:99px;padding:2px 9px;font-size:9px;font-weight:700;color:${tp.color};}
+.desc{font-size:11px;color:#334155;line-height:1.8;background:${tp.bg};padding:10px 12px;border-radius:7px;}
+.br-row{margin-bottom:8px;}
+.bl{display:flex;justify-content:space-between;margin-bottom:3px;}
+.bb{height:7px;background:#E2EBF6;border-radius:99px;overflow:hidden;}
+.bf{height:100%;border-radius:99px;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.gi{display:flex;gap:7px;margin-bottom:6px;align-items:flex-start;font-size:12px;}
+.gn{width:20px;height:20px;border-radius:50%;background:${tp.color};color:#fff;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cr{display:flex;gap:8px;margin-bottom:6px;font-size:12px;}
+.cl{font-size:10px;font-weight:700;color:${tp.color};min-width:65px;}
+.jg{display:flex;flex-wrap:wrap;gap:7px;}
+.jc{background:${tp.bg};border:1.5px solid ${tp.color}33;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;color:#1B3A6B;}
+.jt{border-color:${tp.color};color:${tp.color};}
+.cb{height:8px;background:#E2EBF6;border-radius:99px;overflow:hidden;margin:6px 0;}
+.cf{height:100%;border-radius:99px;background:${tp.color};width:${tp.change}%;}
+.ft{background:#1B3A6B;color:rgba(186,230,253,0.6);text-align:center;padding:10px;font-size:9px;margin-top:16px;}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style></head><body>
+<div class="hd"><div class="br">ReWave Career Compass</div>
+<h1>${form.name ? form.name + "さんの診断結果" : "適職診断結果"}</h1>
+<div class="su">${tp.system} — ${new Date().toLocaleDateString("ja-JP")} 実施</div></div>
+<div class="bd">
+<div class="sec"><div class="badge">${tp.system}</div>
+<div class="tn">${tp.name} <span style="font-size:13px;font-weight:400;color:#64748B">（${tp.sub}）</span></div>
+<div class="tc">${tp.catch}</div>
+<div class="tags">${tp.keys.map(k=>`<span class="tag">${k}</span>`).join("")}</div>
+${tp.desc ? `<div class="desc">${tp.desc}</div>` : ""}</div>
+<div class="sec"><div class="st">📊 5軸パーソナリティスコア</div>
+${axisData.map(ax=>`<div class="br-row"><div class="bl"><span style="font-size:12px;font-weight:700">${ax.label}</span><span style="font-size:13px;font-weight:900;color:${ax.color}">${scores?.[ax.key]||0}%</span></div><div class="bb"><div class="bf" style="background:${ax.color};width:${scores?.[ax.key]||0}%"></div></div></div>`).join("")}
+</div>
+<div class="two">
+<div class="sec"><div class="st">😊 良いところ</div>${tp.good.map(g=>`<div class="gi"><span style="color:${tp.color};flex-shrink:0">●</span><span>${g}</span></div>`).join("")}</div>
+<div class="sec"><div class="st">⚠️ 注意点</div>${tp.care.map(c=>`<div class="gi"><span style="color:#F97316;flex-shrink:0">×</span><span>${c}</span></div>`).join("")}</div>
+</div>
+<div class="sec"><div class="st">💬 職場での相性</div>
+<div class="cr"><span class="cl">💼 得意な仕事</span><span>${tp.compat?.work||""}</span></div>
+<div class="cr"><span class="cl">👆 合う上司</span><span>${tp.compat?.boss||""}</span></div>
+<div class="cr"><span class="cl">🤝 合う同僚</span><span>${tp.compat?.peer||""}</span></div>
+<div class="cr"><span class="cl" style="color:#F97316">⚠️ 苦手上司</span><span>${tp.compat?.ng_boss||""}</span></div>
+<div class="cr"><span class="cl" style="color:#F43F5E">😓 苦手同僚</span><span>${tp.compat?.ng_peer||""}</span></div>
+</div>
+<div class="sec"><div class="st">🌱 成長ヒント</div>
+${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>${h}</span></div>`).join("")}</div>
+<div class="sec"><div class="st">💼 おすすめ適職</div>
+<div class="jg">${tp.jobs.map((j,i)=>`<div class="jc ${i===0?"jt":""}">${i===0?"★ ":""}${j}</div>`).join("")}</div></div>
+<div class="sec"><div class="st">🔄 転職度</div>
+<div style="font-size:20px;font-weight:900;color:${tp.color}">${tp.change}%</div>
+<div class="cb"><div class="cf"></div></div>
+<p style="font-size:11px;color:#64748B">${tp.change>=50?"今の職場とはそこまで相性が良くないようです。転職を検討しても良い時期かもしれません。":"今の職場でさらに力を伸ばせる可能性があります。スキルアップを意識して取り組んでみましょう。"}</p></div>
+</div>
+<div class="ft">ReWave Career Compass | rewave-shindan.vercel.app | 無料キャリア相談：timerex.net/s/jobagency_4d9c/0fb7dbf2</div>
+</body></html>`;
+    const win = window.open("","_blank");
+    if (!win) { alert("ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。"); return; }
+    win.document.write(html);
+    win.document.close();
+    win.onload = () => { win.focus(); win.print(); };
   }
-
   function restart() {
     setPhase("intro"); setCurrent(0); setAnswers(Array(20).fill(null));
     setSelected(null); setHovered(null); setScores(null); setMyType(null);
@@ -1260,11 +1204,11 @@ export default function App() {
 
         {/* PDFダウンロード＋もう一度ボタン */}
         <div style={{ textAlign:"center", marginTop:24, display:"flex", flexDirection:"column", alignItems:"center", gap:12 }}>
-          <button onClick={downloadPDF} disabled={pdfLoading} style={{
+          <button onClick={downloadPDF} style={{
             background:`linear-gradient(135deg,${C.coral},#EF4444)`,
             color:"#fff", border:"none", borderRadius:99,
             padding:"14px 36px", fontSize:14, fontWeight:900,
-            cursor:pdfLoading?"not-allowed":"pointer",
+            cursor:"pointer",
             boxShadow:"0 6px 20px rgba(249,115,22,0.35)",
             transition:"all 0.18s", opacity:pdfLoading?0.7:1,
             display:"flex", alignItems:"center", gap:8,
@@ -1272,7 +1216,7 @@ export default function App() {
             onMouseEnter={e=>{if(!pdfLoading){e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 28px rgba(249,115,22,0.45)";}}}
             onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="0 6px 20px rgba(249,115,22,0.35)";}}
           >
-            {pdfLoading ? "⏳ 生成中..." : "📄 結果をPDFで保存する"}
+            "📄 結果をPDFで保存する"
           </button>
           <button onClick={restart} style={{ background:"transparent", border:`1px solid ${C.borderMd}`, color:C.txt3, borderRadius:99, padding:"10px 26px", fontSize:12, fontWeight:700, cursor:"pointer", transition:"all 0.15s" }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=C.navyMid;e.currentTarget.style.color=C.navy;}}
