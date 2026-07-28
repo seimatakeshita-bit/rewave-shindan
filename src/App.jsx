@@ -252,6 +252,7 @@ export default function App() {
   const [showOther, setShowOther] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [errors, setErrors]   = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   /* Form state */
   const [form, setForm] = useState({
@@ -344,7 +345,7 @@ export default function App() {
     setPhase("intro"); setCurrent(0); setAnswers(Array(20).fill(null));
     setSelected(null); setHovered(null); setScores(null); setJobs([]);
     setAxRes(null); setAiText(null); setAiLoad(false); setLoadStep(0);
-    setShowOther(false); setExpanded(null); setErrors({});
+    setShowOther(false); setExpanded(null); setErrors({}); setSubmitting(false);
     setForm({ name:"", birth:"", phone:"", email:"", location:"", timing:"", jobs:[], memo:"" });
   }
 
@@ -517,7 +518,7 @@ export default function App() {
           </Field>
 
           {/* Submit */}
-          <button onClick={async ()=>{ if(validateForm()){ await sendToSheet(form); setPhase("quiz"); } }} style={{
+          <button onClick={async ()=>{ if(submitting) return; if(validateForm()){ setSubmitting(true); await sendToSheet(form); setSubmitting(false); setPhase("quiz"); } }} style={{
             width:"100%", background:`linear-gradient(135deg,${C.navy},${C.navyLt})`,
             color:"#fff", border:"none", borderRadius:12, padding:"16px",
             fontSize:15, fontWeight:900, cursor:"pointer",
