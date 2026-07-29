@@ -246,7 +246,7 @@ const QS = [
 const JOB_OPTIONS = ["事務職","受付・事務","施工管理職","エンジニア職","営業職","販売職","WEBデザイナー","飲食・調理職","医療・介護職","マーケティング","コンサルタント","クリエイター","まだわからない"];
 const ALL_PREFS = ["北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"];
 const TIMING_OPTIONS = ["今すぐ","1ヶ月〜3ヶ月以内","3ヶ月〜5ヶ月以内","まだわからない"];
-const PREF_OPTIONS = ["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡","その他"];
+const PREF_OPTIONS = ["東京","神奈川","埼玉","大阪","名古屋","福岡","その他"];
 
 /* ════════════════════════════════════════
    SCORING & TYPE DETECTION
@@ -701,27 +701,22 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
           <Field label="メールアドレス" required><FInput type="email" value={form.email} onChange={e=>setF("email",e.target.value)} placeholder="example@mail.com"/>{errors.email&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.email}</p>}</Field>
           <Field label="希望勤務地" required>
             <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:8 }}>
-              {PREF_OPTIONS.map(p=>(
-                <button key={p} onClick={()=>{ setF("location", p==="その他"?"":p); }} style={{ padding:"8px 14px", borderRadius:99, fontSize:12, fontWeight:700, background:(p==="その他"?!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="":form.location===p)?C.ocean:C.bgMist, color:(p==="その他"?!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="":form.location===p)?"#fff":C.txt2, border:`1.5px solid ${(p==="その他"?!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="":form.location===p)?C.ocean:C.border}`, cursor:"pointer", transition:"all 0.15s" }}>{p}</button>
+              {["東京","神奈川","埼玉","大阪","名古屋","福岡"].map(p=>(
+                <button key={p} onClick={()=>setF("location",p)} style={{ padding:"8px 14px", borderRadius:99, fontSize:12, fontWeight:700, background:form.location===p?C.ocean:C.bgMist, color:form.location===p?"#fff":C.txt2, border:`1.5px solid ${form.location===p?C.ocean:C.border}`, cursor:"pointer", transition:"all 0.15s" }}>{p}</button>
               ))}
+              {/* その他ボタン */}
+              <button onClick={()=>setF("location","その他_選択中")} style={{ padding:"8px 14px", borderRadius:99, fontSize:12, fontWeight:700, background:form.location==="その他_選択中"||(!["東京","神奈川","埼玉","大阪","名古屋","福岡"].includes(form.location)&&form.location!==""&&form.location!=="その他_選択中")?C.ocean:C.bgMist, color:form.location==="その他_選択中"||(!["東京","神奈川","埼玉","大阪","名古屋","福岡"].includes(form.location)&&form.location!==""&&form.location!=="その他_選択中")?"#fff":C.txt2, border:`1.5px solid ${form.location==="その他_選択中"||(!["東京","神奈川","埼玉","大阪","名古屋","福岡"].includes(form.location)&&form.location!==""&&form.location!=="その他_選択中")?C.ocean:C.border}`, cursor:"pointer", transition:"all 0.15s" }}>その他</button>
             </div>
-            {/* その他選択時：都道府県ドロップダウン */}
-            {!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡",""].includes(form.location) || (!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location) && form.location==="" ) ? null :
-              !["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location) && form.location !== "" ? (
-                <div style={{ marginTop:4 }}>
-                  <select value={form.location} onChange={e=>setF("location",e.target.value)} style={{ width:"100%", padding:"12px 14px", fontSize:14, color:C.txt1, background:C.bgCard, border:`1.5px solid ${C.ocean}`, borderRadius:10, outline:"none", cursor:"pointer" }}>
-                    <option value="">都道府県を選択</option>
-                    {ALL_PREFS.map(p=><option key={p} value={p}>{p}</option>)}
-                  </select>
-                </div>
-              ) : null
-            }
-            {/* その他ボタン押下時のドロップダウン表示 */}
-            {!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location) && (
+            {/* その他押下時：都道府県ドロップダウン */}
+            {(form.location==="その他_選択中"||(!["東京","神奈川","埼玉","大阪","名古屋","福岡"].includes(form.location)&&form.location!==""&&form.location!=="その他_選択中")) && (
               <div style={{ marginTop:8 }}>
-                <select value={form.location} onChange={e=>setF("location",e.target.value)} style={{ width:"100%", padding:"12px 14px", fontSize:14, color:C.txt1, background:C.bgCard, border:`1.5px solid ${C.ocean}`, borderRadius:10, outline:"none", cursor:"pointer" }}>
+                <select
+                  value={!["東京","神奈川","埼玉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="その他_選択中"?form.location:""}
+                  onChange={e=>setF("location",e.target.value)}
+                  style={{ width:"100%", padding:"12px 14px", fontSize:14, color:C.txt1, background:C.bgCard, border:`1.5px solid ${C.ocean}`, borderRadius:10, outline:"none", cursor:"pointer", fontFamily:"'Noto Sans JP','Hiragino Sans',sans-serif" }}
+                >
                   <option value="">都道府県を選択してください</option>
-                  {ALL_PREFS.filter(p=>!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(p)).map(p=><option key={p} value={p}>{p}</option>)}
+                  {ALL_PREFS.filter(p=>!["東京","神奈川","埼玉","大阪","名古屋","福岡"].includes(p)).map(p=><option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
             )}
