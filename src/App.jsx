@@ -561,8 +561,7 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
     a.download = fname + ".html";
     a.click();
     URL.revokeObjectURL(url);
-    alert("HTMLファイルをダウンロードしました！
-ファイルを開いてCtrl+P（印刷）→PDFとして保存してください。");
+    alert("HTMLファイルをダウンロードしました！ファイルを開いてCtrl+Pで印刷→PDFとして保存してください。");
   }
   function restart() {
     setPhase("intro"); setCurrent(0); setAnswers(Array(20).fill(null));
