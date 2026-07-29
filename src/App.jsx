@@ -683,7 +683,19 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
       <div style={{ maxWidth:560, margin:"0 auto", padding:"32px 20px 60px" }}>
         <div style={{ background:C.bgCard, borderRadius:20, boxShadow:"0 4px 24px rgba(27,43,94,0.09)", padding:"28px 24px" }}>
           <Field label="お名前" required><FInput value={form.name} onChange={e=>setF("name",e.target.value)} placeholder="山田 太郎"/>{errors.name&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.name}</p>}</Field>
-          <Field label="生年月日" required><FInput type="date" value={form.birth} onChange={e=>setF("birth",e.target.value)} onKeyDown={e=>e.preventDefault()}/>{errors.birth&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.birth}</p>}</Field>
+          <Field label="生年月日" required>
+            <input
+              type="date"
+              value={form.birth}
+              onChange={e=>setF("birth",e.target.value)}
+              onKeyDown={e=>e.preventDefault()}
+              readOnly={false}
+              style={{ width:"100%", padding:"12px 14px", fontSize:16, color:C.txt1, background:C.bgCard, border:`1.5px solid ${C.border}`, borderRadius:10, outline:"none", WebkitAppearance:"none", appearance:"none", maxWidth:"100%", fontFamily:"'Noto Sans JP','Hiragino Sans',sans-serif", cursor:"pointer" }}
+              onFocus={e=>{e.target.style.borderColor=C.ocean;}}
+              onBlur={e=>{e.target.style.borderColor=C.border;}}
+            />
+            {errors.birth&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.birth}</p>}
+          </Field>
           <Field label="電話番号" required><FInput type="tel" value={form.phone} onChange={e=>setF("phone",e.target.value)} placeholder="09012345678"/>{errors.phone&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.phone}</p>}</Field>
           <Field label="メールアドレス" required><FInput type="email" value={form.email} onChange={e=>setF("email",e.target.value)} placeholder="example@mail.com"/>{errors.email&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.email}</p>}</Field>
           <Field label="希望勤務地" required>
