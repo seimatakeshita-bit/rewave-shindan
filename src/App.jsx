@@ -243,7 +243,7 @@ const QS = [
   {axis:"X",q:"10年後の自分のイメージは？",opts:[{t:"安定した生活と信頼できる仲間",v:4},{t:"専門性を持った信頼されるプロ",v:3},{t:"多くの経験を積んだ幅広い人材",v:2},{t:"業界で名の知れた存在や起業家",v:1}]},
 ];
 
-const JOB_OPTIONS = ["事務職","受付・事務","施工管理職","エンジニア職","営業職","販売職","WEBデザイナー","飲食・調理職","医療・介護職","マーケティング","コンサルタント","クリエイター","まだわからない"];
+const JOB_OPTIONS = ["事務職","受付・事務","施工管理職","エンジニア職","営業職","販売職","WEBデザイナー","飲食・調理職","医療・介護職","マーケティング","コンサルタント","その他","まだわからない"];
 const ALL_PREFS = ["北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"];
 const TIMING_OPTIONS = ["今すぐ","1ヶ月〜3ヶ月以内","3ヶ月〜5ヶ月以内","まだわからない"];
 const PREF_OPTIONS = ["東京","神奈川","埼玉","大阪","名古屋","福岡","その他"];
@@ -723,9 +723,9 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
             {errors.location&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.location}</p>}
           </Field>
           <Field label="いつから就業したい？" required>
-            <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8 }}>
               {TIMING_OPTIONS.map(t=>(
-                <button key={t} onClick={()=>setF("timing",t)} style={{ padding:"9px 16px", borderRadius:99, fontSize:12, fontWeight:700, background:form.timing===t?C.navyMid:C.bgMist, color:form.timing===t?"#fff":C.txt2, border:`1.5px solid ${form.timing===t?C.navyMid:C.border}`, cursor:"pointer", transition:"all 0.15s" }}>{t}</button>
+                <button key={t} onClick={()=>setF("timing",t)} style={{ padding:"9px 8px", borderRadius:99, fontSize:11, fontWeight:700, background:form.timing===t?C.navyMid:C.bgMist, color:form.timing===t?"#fff":C.txt2, border:`1.5px solid ${form.timing===t?C.navyMid:C.border}`, cursor:"pointer", transition:"all 0.15s", textAlign:"center" }}>{t}</button>
               ))}
             </div>
             {errors.timing&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.timing}</p>}
