@@ -777,14 +777,6 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
         <div style={{ maxWidth:560, margin:"0 auto" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              {/* 戻るボタン（最後の質問以外） */}
-              {current < 19 && (
-                <button onClick={goBack} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(56,189,248,0.25)", borderRadius:8, width:30, height:30, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", color:"rgba(186,230,253,0.7)", fontSize:16, transition:"all 0.15s", fontFamily:"inherit" }}
-                  onMouseEnter={e=>{e.currentTarget.style.background="rgba(255,255,255,0.15)";e.currentTarget.style.color="#fff";}}
-                  onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.08)";e.currentTarget.style.color="rgba(186,230,253,0.7)";}}
-                  title="前の質問に戻る"
-                >←</button>
-              )}
               <div style={{ width:30, height:30, borderRadius:8, background:`${ax?.color}22`, border:`1px solid ${ax?.color}44`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14 }}>{ax?.icon}</div>
               <span style={{ fontSize:13, fontWeight:700, color:ax?.color }}>{ax?.label}</span>
               <span style={{ fontSize:11, color:"rgba(125,211,252,0.45)" }}>Q{(current%4)+1}/4</span>
@@ -1232,13 +1224,13 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
             padding:"14px 36px", fontSize:14, fontWeight:900,
             cursor:"pointer",
             boxShadow:"0 6px 20px rgba(249,115,22,0.35)",
-            transition:"all 0.18s", opacity:pdfLoading?0.7:1,
+            transition:"all 0.18s",
             display:"flex", alignItems:"center", gap:8,
           }}
-            onMouseEnter={e=>{if(!pdfLoading){e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 28px rgba(249,115,22,0.45)";}}}
+            onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 28px rgba(249,115,22,0.45)";}}
             onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="0 6px 20px rgba(249,115,22,0.35)";}}
           >
-            "📄 結果をPDFで保存する"
+            📄 結果をPDFで保存する
           </button>
           <button onClick={restart} style={{ background:"transparent", border:`1px solid ${C.borderMd}`, color:C.txt3, borderRadius:99, padding:"10px 26px", fontSize:12, fontWeight:700, cursor:"pointer", transition:"all 0.15s" }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=C.navyMid;e.currentTarget.style.color=C.navy;}}
