@@ -441,7 +441,7 @@ export default function App() {
     setAnimIn(false);
     setTimeout(()=>{
       const na=[...answers]; na[current]=null; setAnswers(na);
-      setCurrent(c=>c-1); setSelected(answers[current-1]); setHovered(null); setAnimIn(true);
+      setCurrent(c=>c-1); setSelected(null); setHovered(null); setAnimIn(true);
     },240);
   }
 
@@ -832,6 +832,24 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
               );
             })}
           </div>
+          {/* 戻るボタン（選択肢の下・Q20以外） */}
+          {current < 19 && (
+            <div style={{ textAlign:"center", marginTop:20 }}>
+              <button onClick={goBack} style={{
+                background:"rgba(255,255,255,0.06)",
+                backdropFilter:"blur(8px)",
+                border:"1px solid rgba(56,189,248,0.25)",
+                borderRadius:99, padding:"10px 28px",
+                color:"rgba(186,230,253,0.6)", fontSize:13, fontWeight:700,
+                cursor:"pointer", transition:"all 0.18s",
+                fontFamily:"'Noto Sans JP','Hiragino Sans',sans-serif",
+                display:"inline-flex", alignItems:"center", gap:6,
+              }}
+                onMouseEnter={e=>{e.currentTarget.style.background="rgba(255,255,255,0.12)";e.currentTarget.style.color="rgba(186,230,253,0.9)";e.currentTarget.style.borderColor="rgba(56,189,248,0.5)";}}
+                onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.06)";e.currentTarget.style.color="rgba(186,230,253,0.6)";e.currentTarget.style.borderColor="rgba(56,189,248,0.25)";}}
+              >← 前の質問に戻る</button>
+            </div>
+          )}
         </div>
       </div>
       <style>{CSS}</style>
