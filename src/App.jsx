@@ -244,8 +244,9 @@ const QS = [
 ];
 
 const JOB_OPTIONS = ["事務職","受付・事務","施工管理職","エンジニア職","営業職","販売職","WEBデザイナー","飲食・調理職","医療・介護職","マーケティング","コンサルタント","クリエイター","まだわからない"];
-const TIMING_OPTIONS = ["今すぐ","1ヶ月〜3ヶ月以内","3ヶ月以上先","考えていない"];
-const PREF_OPTIONS = ["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡","その他（全国）","リモート希望"];
+const ALL_PREFS = ["北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"];
+const TIMING_OPTIONS = ["今すぐ","1ヶ月〜3ヶ月以内","3ヶ月〜5ヶ月以内","まだわからない"];
+const PREF_OPTIONS = ["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡","その他"];
 
 /* ════════════════════════════════════════
    SCORING & TYPE DETECTION
@@ -588,9 +589,9 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
           <p className="fu2" style={{ color:"rgba(186,230,253,0.75)", fontSize:"clamp(13px,3vw,16px)", lineHeight:1.9, marginBottom:40 }}>
             5軸×20問の本格診断で<strong style={{color:C.foam}}>あなたのタイプ</strong>が判明🌊
           </p>
-          <div className="fu3" style={{ display:"flex", flexWrap:"wrap", gap:10, justifyContent:"center", marginBottom:44 }}>
+          <div className="fu3" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:44, maxWidth:320, margin:"0 auto 44px" }}>
             {["⭐ 16タイプ分類","✨ 約5分で完了","🆓 完全無料","📊 5軸本格分析"].map((t,i)=>(
-              <span key={i} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:99, padding:"7px 16px", fontSize:11, fontWeight:700, color:"rgba(186,230,253,0.85)" }}>{t}</span>
+              <span key={i} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:99, padding:"7px 16px", fontSize:11, fontWeight:700, color:"rgba(186,230,253,0.85)", textAlign:"center" }}>{t}</span>
             ))}
           </div>
           <button onClick={()=>setPhase("form")} style={{
@@ -699,11 +700,31 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
           <Field label="電話番号" required><FInput type="tel" value={form.phone} onChange={e=>setF("phone",e.target.value)} placeholder="09012345678"/>{errors.phone&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.phone}</p>}</Field>
           <Field label="メールアドレス" required><FInput type="email" value={form.email} onChange={e=>setF("email",e.target.value)} placeholder="example@mail.com"/>{errors.email&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.email}</p>}</Field>
           <Field label="希望勤務地" required>
-            <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+            <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:8 }}>
               {PREF_OPTIONS.map(p=>(
-                <button key={p} onClick={()=>setF("location",p)} style={{ padding:"8px 14px", borderRadius:99, fontSize:12, fontWeight:700, background:form.location===p?C.ocean:C.bgMist, color:form.location===p?"#fff":C.txt2, border:`1.5px solid ${form.location===p?C.ocean:C.border}`, cursor:"pointer", transition:"all 0.15s" }}>{p}</button>
+                <button key={p} onClick={()=>{ setF("location", p==="その他"?"":p); }} style={{ padding:"8px 14px", borderRadius:99, fontSize:12, fontWeight:700, background:(p==="その他"?!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="":form.location===p)?C.ocean:C.bgMist, color:(p==="その他"?!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="":form.location===p)?"#fff":C.txt2, border:`1.5px solid ${(p==="その他"?!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location)&&form.location!=="":form.location===p)?C.ocean:C.border}`, cursor:"pointer", transition:"all 0.15s" }}>{p}</button>
               ))}
             </div>
+            {/* その他選択時：都道府県ドロップダウン */}
+            {!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡",""].includes(form.location) || (!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location) && form.location==="" ) ? null :
+              !["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location) && form.location !== "" ? (
+                <div style={{ marginTop:4 }}>
+                  <select value={form.location} onChange={e=>setF("location",e.target.value)} style={{ width:"100%", padding:"12px 14px", fontSize:14, color:C.txt1, background:C.bgCard, border:`1.5px solid ${C.ocean}`, borderRadius:10, outline:"none", cursor:"pointer" }}>
+                    <option value="">都道府県を選択</option>
+                    {ALL_PREFS.map(p=><option key={p} value={p}>{p}</option>)}
+                  </select>
+                </div>
+              ) : null
+            }
+            {/* その他ボタン押下時のドロップダウン表示 */}
+            {!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(form.location) && (
+              <div style={{ marginTop:8 }}>
+                <select value={form.location} onChange={e=>setF("location",e.target.value)} style={{ width:"100%", padding:"12px 14px", fontSize:14, color:C.txt1, background:C.bgCard, border:`1.5px solid ${C.ocean}`, borderRadius:10, outline:"none", cursor:"pointer" }}>
+                  <option value="">都道府県を選択してください</option>
+                  {ALL_PREFS.filter(p=>!["東京","神奈川","埼玉","千葉","大阪","名古屋","福岡"].includes(p)).map(p=><option key={p} value={p}>{p}</option>)}
+                </select>
+              </div>
+            )}
             {errors.location&&<p style={{color:C.rose,fontSize:11,marginTop:5}}>⚠ {errors.location}</p>}
           </Field>
           <Field label="いつから就業したい？" required>
@@ -1122,18 +1143,24 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
             <p style={{ fontSize:13, color:"rgba(186,230,253,0.6)", lineHeight:1.9, marginBottom:28 }}>
               ReWaveのキャリアアドバイザーが<br/>あなたの診断結果をもとに<br/>ぴったりの求人を無料で提案します。
             </p>
-            <a href={TIMEREX_URL} target="_blank" rel="noopener noreferrer" style={{
-              display:"block", maxWidth:320, margin:"0 auto 14px",
-              background:`linear-gradient(135deg,${C.aqua},${C.ocean})`,
-              color:"#fff", textDecoration:"none", borderRadius:99,
-              padding:"18px 0", fontSize:15, fontWeight:900,
-              boxShadow:`0 8px 32px rgba(6,182,212,0.4)`, transition:"all 0.18s"
-            }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 14px 40px rgba(6,182,212,0.5)`;}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow=`0 8px 32px rgba(6,182,212,0.4)`;}}
-            >
-              📅 無料キャリア相談を今すぐ予約する
-            </a>
+            {form.timing === "まだわからない" ? (
+              <div style={{ maxWidth:320, margin:"0 auto 14px", background:"rgba(255,255,255,0.1)", borderRadius:99, padding:"18px 0", fontSize:15, fontWeight:900, color:"rgba(186,230,253,0.4)", textAlign:"center", border:"2px dashed rgba(186,230,253,0.2)" }}>
+                📅 就業時期が決まったらご相談ください
+              </div>
+            ) : (
+              <a href={TIMEREX_URL} target="_blank" rel="noopener noreferrer" style={{
+                display:"block", maxWidth:320, margin:"0 auto 14px",
+                background:`linear-gradient(135deg,${C.aqua},${C.ocean})`,
+                color:"#fff", textDecoration:"none", borderRadius:99,
+                padding:"18px 0", fontSize:15, fontWeight:900,
+                boxShadow:`0 8px 32px rgba(6,182,212,0.4)`, transition:"all 0.18s"
+              }}
+                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 14px 40px rgba(6,182,212,0.5)`;}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow=`0 8px 32px rgba(6,182,212,0.4)`;}}
+              >
+                📅 無料キャリア相談を今すぐ予約する
+              </a>
+            )}
             <div style={{ display:"flex", justifyContent:"center", gap:20, fontSize:11, color:"rgba(186,230,253,0.35)", marginBottom:20, fontWeight:700 }}>
               <span>✓ 完全無料</span><span>✓ オンライン対応</span><span>✓ 20代専門</span>
             </div>
