@@ -606,7 +606,7 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
       </WaveHeader>
 
       <div style={{ maxWidth:700, margin:"0 auto", padding:"40px 20px 60px" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:14, marginBottom:32 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:32 }}>
           {[
             {icon:"🧬", t:"16タイプ分類", d:"あなたの個性を詳細に分析", c:C.ocean},
             {icon:"🤖", t:"AIキャリアアドバイス", d:"あなただけの提言を生成", c:C.violet},
@@ -635,7 +635,7 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
               <span style={{ display:"inline-block", background:"rgba(251,191,36,0.15)", border:"1px solid rgba(251,191,36,0.35)", color:"#FCD34D", borderRadius:99, padding:"4px 16px", fontSize:11, fontWeight:700, marginBottom:10 }}>🔥 あなたの適職がわかる！</span>
               <div style={{ fontSize:18, fontWeight:900, color:"#fff" }}>診断で<span style={{color:"#38BDF8"}}>天職</span>を見つけよう</div>
             </div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))", gap:10 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
               {[
                 {icon:"📋",name:"事務職",     color:"#22D3EE",grad:"linear-gradient(135deg,#06B6D4,#0EA5E9)",tag:"安定"},
                 {icon:"🏗️",name:"施工管理職",  color:"#FB923C",grad:"linear-gradient(135deg,#F97316,#EF4444)",tag:"高収入"},
@@ -646,6 +646,7 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
                 {icon:"🎨",name:"WEBデザイナー",color:"#FBBF24",grad:"linear-gradient(135deg,#F59E0B,#D97706)",tag:"クリエイティブ"},
                 {icon:"🍳",name:"飲食・調理職", color:"#FB7185",grad:"linear-gradient(135deg,#F43F5E,#E11D48)",tag:"未経験OK"},
                 {icon:"🏥",name:"医療・介護職", color:"#4ADE80",grad:"linear-gradient(135deg,#22C55E,#16A34A)",tag:"需要高い"},
+                {icon:"💼",name:"人事・採用",   color:"#818CF8",grad:"linear-gradient(135deg,#6366F1,#4F46E5)",tag:"やりがい"},
               ].map((j,i)=>(
                 <div key={i} style={{ background:"rgba(255,255,255,0.06)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:14, padding:"12px 8px", textAlign:"center",
                   animation:`${i%2===0?"slideInLeft":"slideInRight"} 0.6s cubic-bezier(0.16,1,0.3,1) ${i*0.1}s both`,
