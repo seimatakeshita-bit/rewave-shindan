@@ -1127,7 +1127,8 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
           }
         </div>
 
-        {/* CTA */}
+        {/* CTA - まだわからない以外のみ表示 */}
+        {form.timing !== "まだわからない" && (
         <div style={{ position:"relative", overflow:"hidden", background:`linear-gradient(135deg,${C.navy} 0%,${C.navyMid} 50%,${C.navyLt} 100%)`, borderRadius:22, padding:"36px 28px", textAlign:"center", boxShadow:`0 16px 48px rgba(27,58,107,0.35)` }}>
           <div style={{ position:"absolute", top:-50, right:-50, width:200, height:200, borderRadius:"50%", background:"rgba(56,189,248,0.06)", pointerEvents:"none" }}/>
           <div style={{ position:"relative", zIndex:1 }}>
@@ -1168,6 +1169,7 @@ ${(tp.growth||[]).map((h,i)=>`<div class="gi"><div class="gn">${i+1}</div><span>
             )}
           </div>
         </div>
+        )}
 
         {/* 16タイプ一覧 */}
         <div style={{ background:C.bgCard, borderRadius:20, boxShadow:"0 3px 20px rgba(27,43,94,0.09)", padding:"24px", marginBottom:14 }}>
